@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @GraphWalker(
@@ -29,12 +28,12 @@ public class LoginTest extends ExecutionContext implements Login {
         driver.get("https://apt-public.appspot.com/testing-lab-login.html");
     }
 
-//    @AfterExecution
-//    public void cleanup() {
-//        if (this.driver != null) {
-//            this.driver.quit();
-//        }
-//    }
+    @AfterExecution
+    public void cleanup() {
+        if (this.driver != null) {
+            this.driver.quit();
+        }
+    }
 
     @Override
     public void v_LoginPage() {
@@ -44,8 +43,7 @@ public class LoginTest extends ExecutionContext implements Login {
 
     @Override
     public void e_Login() {
-        this.waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input")));
-        this.waiter.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input"))).click();
+        WaitAndClick.waitAndClick(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input"), waiter);
     }
 
     @Override
