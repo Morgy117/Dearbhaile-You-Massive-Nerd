@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @GraphWalker(
@@ -25,7 +26,7 @@ public class LoginTest extends ExecutionContext implements Login {
         driver = new ChromeDriver();
         Assert.assertNotNull(driver);
         waiter = new WebDriverWait(driver, 10);
-        driver.get("https://the-internet.herokuapp.com/login");
+        driver.get("https://apt-public.appspot.com/testing-lab-login.html");
     }
 
 //    @AfterExecution
@@ -38,17 +39,18 @@ public class LoginTest extends ExecutionContext implements Login {
     @Override
     public void v_LoginPage() {
         String URL = driver.getCurrentUrl();
-        Assert.assertEquals(URL, "https://the-internet.herokuapp.com/login" );
+        Assert.assertEquals(URL, "https://apt-public.appspot.com/testing-lab-login.html" );
     }
 
     @Override
     public void e_Login() {
-        //driver.findElement(By.xpath("//*[@id=\"login\"]/button")).click();
+        this.waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input")));
+        this.waiter.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input"))).click();
     }
 
     @Override
     public void v_Home() {
-        //String URL = driver.getCurrentUrl();
-       // Assert.assertEquals(URL, "https://the-internet.herokuapp.com/secure" );
+        String URL = driver.getCurrentUrl();
+        Assert.assertEquals(URL, "https://apt-public.appspot.com/testing-lab-login" );
     }
 }
